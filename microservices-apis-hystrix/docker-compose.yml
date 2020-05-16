@@ -1,0 +1,33 @@
+version: '3.3'
+
+services:
+  github:
+    build:
+      context: ./GitHub
+      dockerfile: Dockerfile
+    container_name: "github"
+    ports:
+      - "8081:8080"
+    restart: always
+
+  twitter:
+    build:
+      context: ./Twitter
+      dockerfile: Dockerfile
+    container_name: "twitter"
+    ports:
+      - "8082:8080"
+    restart: always
+
+  tema7:
+    build:
+      context: ./Integracao_tt_git
+      dockerfile: Dockerfile
+    container_name: "integracao"
+    depends_on:
+      - github
+      - twitter
+
+    ports:
+      - "8080:8080"
+    restart: always 

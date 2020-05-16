@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+	def springVersion = '5.1.5.RELEASE'
+
+    compile([
+            "org.springframework:spring-core:${springVersion}",
+            "org.springframework:spring-context:${springVersion}",
+            "org.springframework:spring-beans:${springVersion}",
+            "org.springframework:spring-test:${springVersion}"
+    ])
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}

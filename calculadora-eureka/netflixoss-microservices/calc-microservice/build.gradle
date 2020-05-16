@@ -1,0 +1,121 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'eclipse'
+apply plugin: 'project-report'
+
+version = '1.0'
+sourceCompatibility = 1.8
+
+mainClassName = "com.dudacf26.cloudnative.tema9.msa.ServerRunner"
+
+applicationDefaultJvmArgs = [
+								 "-Djava.net.preferIPv4Stack=true",
+								 "-Djava.net.preferIPv6Addresses=false",
+								 "-server",
+								 "-Xmx2048m",
+								 "-Xms128m" 
+							]
+
+repositories {
+	jcenter()
+	mavenLocal()
+}
+
+buildscript {
+	repositories {
+			jcenter()
+			mavenLocal()
+	}
+}
+
+eclipse {
+	classpath {
+		downloadSources = true
+	}
+}
+
+configurations {
+    all*.exclude group: 'org.mortbay.jetty', module: 'servlet-api'
+}
+
+ext{
+    karyonVersion = '2.7.5'
+    slf4jVersion = '1.7.12'
+    logbackVersion = '1.0.13'
+    jerseyVersion = '1.18.4'
+    hystrixVersion = '0.1.1'
+    ribbonVersion = '2.1.0'
+    jettyVersion = '9.3.13.v20161014'
+    guiceVersion = '4.0'
+    guiceVersionn = '3.0'
+    hystrixVersionn = '1.4.26'
+
+}
+
+
+dependencies {
+
+	compile([
+			  'ch.qos.logback:logback-classic:logbackVersion',
+			  'org.slf4j:slf4j-log4j12:slf4jVersion',
+			  'org.slf4j:slf4j-jdk14:slf4jVersion',
+			  
+			  'com.netflix.servo:servo-core:0.8.+',
+			  
+			  'com.netflix.karyon:karyon2-core:karyonVersion',
+			  'com.netflix.karyon:karyon2-jersey-blocking:karyonVersion',
+			  'com.netflix.karyon:karyon2-archaius:karyonVersion',
+			  'com.netflix.karyon:karyon2-servo:karyonVersion',
+			  'com.scmspain.karyon:karyon2-hystrix-stream:hystrixVersion',
+			  
+			  'io.reactivex:rxnetty:0.5.1',
+			  
+			  'com.sun.jersey:jersey-client:jerseyVersion',
+			  'com.sun.jersey.contribs:jersey-apache-client4:jerseyVersion',
+
+  			  'org.eclipse.jetty:jetty-server:jettyVersion',
+  			  'org.eclipse.jetty:jetty-servlet:jettyVersion',
+  			  'com.google.inject.extensions:guice-servlet:guiceVersion',
+
+			  'com.netflix.ribbon:ribbon:ribbonVersion',
+			  'com.netflix.ribbon:ribbon-core:ribbonVersion',
+			  'com.netflix.ribbon:ribbon-httpclient:ribbonVersion',
+			  'com.netflix.ribbon:ribbon-transport:ribbonVersion',
+			  'com.netflix.ribbon:ribbon-loadbalancer:ribbonVersion',
+			  'com.netflix.ribbon:ribbon-httpasyncclient:0.3.13',
+    		  'com.google.code.gson:gson:2.3.1',
+    		  
+    		  'com.netflix.hystrix:hystrix-core:hystrixVersionn',
+			  'com.netflix.hystrix:hystrix-metrics-event-stream:',
+			  
+			  'com.google.inject.extensions:guice-assistedinject:guiceVersionn',
+			  'com.google.inject.extensions:guice-multibindings:guiceVersionn',
+			  		  
+		    ])
+	
+	
+	compile (group: 'com.netflix.karyon', name: 'karyon2-admin', version: '2.7.5'){
+	   exclude group: 'javax.servlet'
+	   exclude group: 'org.mortbay.jetty'
+	   exclude group: 'org.mortbay.jetty', module: 'servlet-api'
+	}
+	
+	compile (group: 'com.netflix.karyon', name: 'karyon2-admin-web', version: '2.7.5'){
+	   exclude group: 'javax.servlet'
+	   exclude group: 'org.mortbay.jetty'
+	   exclude group: 'org.mortbay.jetty', module: 'servlet1-api'
+	}
+	
+	compile (group: 'com.netflix.karyon', name: 'karyon2-eureka', version: '2.7.5'){
+	   exclude group: 'javax.servlet'
+	}
+			    
+	compile (group:  'com.netflix.ribbon', name: 'ribbon-eureka', version: "2.1.0") {
+    	exclude group: 'javax.servlet'
+	}
+	
+	compile (group: 'com.netflix.karyon',  name: 'karyon2-admin-healthcheck-plugin',   version: '2.7.5') {
+        exclude group: 'javax.servlet'
+    }
+	 
+}
